@@ -5514,7 +5514,6 @@ __metadata:
     "@vitejs/plugin-react-swc": "npm:^3.7.0"
     ajv: "npm:^7.0.3"
     babel-eslint: "npm:^10.1.0"
-    crypto-browserify: "npm:^3.12.0"
     downloadjs: "npm:^1.4.7"
     eslint: "npm:^9.3.0"
     eslint-config-prettier: "npm:^7.0.0"
@@ -6965,7 +6964,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"crypto-browserify@npm:^3.11.0, crypto-browserify@npm:^3.12.0":
+"crypto-browserify@npm:^3.11.0":
   version: 3.12.0
   resolution: "crypto-browserify@npm:3.12.0"
   dependencies:
