@@ -24,7 +24,7 @@ export default class Footer extends React.Component<
         <div className="footer-dev-team">
           ©{' '}
           <span className="footer-dev-team-years">
-            2020-{format(new Date(), 'YYYY')}
+            2020-{format(new Date(), 'yyyy')}
           </span>
           <a
             href="https://github.com/remap-keys"
