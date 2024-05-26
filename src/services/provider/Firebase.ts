@@ -1059,7 +1059,9 @@ export class FirebaseProvider implements IStorage, IAuth {
           resolve(errorResultOf('Uploading firmware file failed.', error));
         },
         async () => {
-          const hash = createHash('sha256').update(new Uint8Array(await firmwareFile.arrayBuffer())).digest('hex');
+          const hash = createHash('sha256')
+            .update(new Uint8Array(await firmwareFile.arrayBuffer()))
+            .digest('hex');
           const data: any = {
             name: firmwareName,
             description: firmwareDescription,

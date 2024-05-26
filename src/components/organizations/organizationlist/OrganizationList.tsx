@@ -6,7 +6,7 @@ import {
 } from './OrganizationList.container';
 import { Button, Card, CardContent, Link } from '@mui/material';
 import { IOrganization } from '../../../services/storage/Storage';
-import { format } from "date-fns"
+import { format } from 'date-fns';
 
 type OrganizationListState = {};
 type OwnProps = {};
@@ -60,9 +60,12 @@ type OrganizationProps = {
 
 class OrganizationRow extends React.Component<OrganizationProps, any> {
   render() {
-    
-    const createdAt = this.props.organization.created_at ? format(this.props.organization.created_at, "yyyy-MM-dd HH:mm:ss") : 'N/A';
-    const updatedAt = this.props.organization.updated_at ? format(this.props.organization.updated_at, "yyyy-MM-dd HH:mm:ss") : 'N/A';
+    const createdAt = this.props.organization.created_at
+      ? format(this.props.organization.created_at, 'yyyy-MM-dd HH:mm:ss')
+      : 'N/A';
+    const updatedAt = this.props.organization.updated_at
+      ? format(this.props.organization.updated_at, 'yyyy-MM-dd HH:mm:ss')
+      : 'N/A';
 
     return (
       <Card>

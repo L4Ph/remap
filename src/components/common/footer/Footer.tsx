@@ -2,7 +2,7 @@ import React from 'react';
 import { FooterActionsType, FooterStateType } from './Footer.container';
 import './Footer.scss';
 import PaidIcon from '@mui/icons-material/Paid';
-import { format } from "date-fns"
+import { format } from 'date-fns';
 
 type FooterState = {};
 
@@ -24,7 +24,7 @@ export default class Footer extends React.Component<
         <div className="footer-dev-team">
           ©{' '}
           <span className="footer-dev-team-years">
-            2020-{format(new Date, "YYYY")}
+            2020-{format(new Date(), 'YYYY')}
           </span>
           <a
             href="https://github.com/remap-keys"
