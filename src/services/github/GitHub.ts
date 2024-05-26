@@ -1,4 +1,4 @@
-import * as axios from 'axios';
+import ky from 'ky';
 
 export interface IGitHubAccountInfo {
   login: string;
@@ -14,7 +14,6 @@ export interface IFetchAccountInfoResult {
 }
 
 export interface IGitHub {
-  // eslint-disable-next-line no-unused-vars
   fetchAccountInfo: (uid: string) => Promise<IFetchAccountInfoResult>;
 }
 
@@ -24,10 +23,10 @@ export class GitHub implements IGitHub {
   async fetchAccountInfo(uid: string): Promise<IFetchAccountInfoResult> {
     try {
       const url = `${GITHUB_USER_URL}/${uid}`;
-      const response = await axios.default.get<IGitHubAccountInfo>(url);
+      const data: IGitHubAccountInfo = await ky.get(url).json();
       return {
         success: true,
-        info: response.data,
+        info: data,
       };
     } catch (error) {
       return {

@@ -49,7 +49,7 @@ import {
 import { IAuth, IAuthenticationResult } from '../auth/Auth';
 import { IFirmwareCodePlace, IKeyboardFeatures } from '../../store/state';
 import { IDeviceInformation } from '../hid/Hid';
-import * as crypto from 'crypto';
+import { createHash } from 'node:crypto';
 import { IBootloaderType } from '../firmware/Types';
 
 const config = {
@@ -1059,10 +1059,7 @@ export class FirebaseProvider implements IStorage, IAuth {
           resolve(errorResultOf('Uploading firmware file failed.', error));
         },
         async () => {
-          const hash = crypto
-            .createHash('sha256')
-            .update(new Uint8Array(await firmwareFile.arrayBuffer()))
-            .digest('hex');
+          const hash = createHash('sha256').update(new Uint8Array(await firmwareFile.arrayBuffer())).digest('hex');
           const data: any = {
             name: firmwareName,
             description: firmwareDescription,

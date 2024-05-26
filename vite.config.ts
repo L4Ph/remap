@@ -3,6 +3,7 @@ import { readFileSync } from "node:fs";
 import { defineConfig, loadEnv, Plugin, createFilter, transformWithEsbuild } from "vite";
 import react from "@vitejs/plugin-react-swc";
 import tsconfigPaths from "vite-tsconfig-paths";
+import { nodePolyfills } from 'vite-plugin-node-polyfills'
 
 
 // https://vitejs.dev/config/
@@ -20,6 +21,7 @@ export default defineConfig(({ mode }) => {
       importPrefixPlugin(),
       htmlPlugin(mode),
       svgrPlugin(),
+	  nodePolyfills()
     ],
 	test: {
 		globals: true,
