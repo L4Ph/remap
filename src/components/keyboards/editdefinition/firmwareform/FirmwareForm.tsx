@@ -21,9 +21,9 @@ import {
   Typography,
 } from '@mui/material';
 import { IFirmware } from '../../../../services/storage/Storage';
-import moment from 'moment';
 import { IBootloaderType } from '../../../../services/firmware/Types';
 import ConfirmDialog from '../../../common/confirm/ConfirmDialog';
+import {format} from "date-fns"
 
 type OwnProps = {};
 type FirmwareFormProps = OwnProps &
@@ -382,7 +382,7 @@ function FirmwareCard(props: IFirmwareCardProps) {
             {props.firmware.description}
           </Typography>
           <Typography variant="caption" color="textSecondary">
-            {moment(props.firmware.created_at).format('MMMM Do YYYY, HH:mm:ss')}{' '}
+            {format(props.firmware.created_at, "MMMM do yyyy, HH:mm:ss")}{' '}
             <br />
             SHA256: {props.firmware.hash}
             <br />
