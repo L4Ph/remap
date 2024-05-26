@@ -5494,7 +5494,6 @@ __metadata:
     "@types/ajv": "npm:^1.0.0"
     "@types/downloadjs": "npm:^1.4.2"
     "@types/eslint": "npm:^8.56.10"
-    "@types/lodash": "npm:^4.14.167"
     "@types/moment": "npm:^2.13.0"
     "@types/node": "npm:^20.11.5"
     "@types/prop-types": "npm:^15.7.4"

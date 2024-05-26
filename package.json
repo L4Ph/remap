@@ -82,7 +82,6 @@
     "@types/ajv": "^1.0.0",
     "@types/downloadjs": "^1.4.2",
     "@types/eslint": "^8.56.10",
-    "@types/lodash": "^4.14.167",
     "@types/node": "^20.11.5",
     "@types/prop-types": "^15.7.4",
     "@types/qs": "^6.9.6",
