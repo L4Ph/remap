@@ -2,8 +2,8 @@ import React from 'react';
 import './AutocompleteKeys.scss';
 import Autocomplete from '@mui/material/Autocomplete';
 import { TextField } from '@mui/material';
-import { IKeymap } from '../../../services/hid/Hid';
-import { KeymapCategory } from '../../../services/hid/KeycodeList';
+import type { IKeymap } from '../../../services/hid/Hid';
+import type { KeymapCategory } from '../../../services/hid/KeycodeList';
 
 /**
  * Filter and sort strategy.
@@ -16,23 +16,31 @@ const filterOptions = (
   { inputValue }: { inputValue: string }
 ): IKeymap[] => {
   const value = inputValue.toLowerCase();
-  const matchedLabels = options.filter(
-    (option: IKeymap) =>
-      0 <= option.keycodeInfo.label.toLowerCase().indexOf(value)
-  );
-  const matchedKeywords = options.filter((option: IKeymap) =>
-    option.keycodeInfo.keywords.some((kwd) => 0 <= kwd.indexOf(value))
-  );
-  const matchedKinds = options.filter(
-    (option: IKeymap) =>
-      0 <=
-      option.kinds.join('::').replaceAll('_', '-').toLowerCase().indexOf(value)
-  );
+  const result: IKeymap[] = [];
 
-  return Array.from(
-    new Set(matchedLabels.concat(matchedKeywords, matchedKinds))
-  );
+  for (const option of options) {
+    const labelMatched = option.keycodeInfo.label.toLowerCase().includes(value);
+    const keywordMatched = option.keycodeInfo.keywords.some((kwd) =>
+      kwd.includes(value)
+    );
+    const kindsMatched = option.kinds
+      .join('::')
+      .replaceAll('_', '-')
+      .toLowerCase()
+      .includes(value);
+
+    if (labelMatched || keywordMatched || kindsMatched) {
+      result.push(option);
+    }
+  }
+
+  return result.sort((a, b) => {
+    const aHasBasic = a.kinds.includes('basic') ? 1 : 0;
+    const bHasBasic = b.kinds.includes('basic') ? 1 : 0;
+    return bHasBasic - aHasBasic;
+  });
 };
+
 
 type OwnProps = {
   autoFocus: boolean;
@@ -62,7 +70,7 @@ export default class AutocompleteKeys extends React.Component<
   }
 
   private updateValue(value: IKeymap | string | null) {
-    if (typeof value != 'string') {
+    if (typeof value !== 'string') {
       this.props.onChange(value);
     }
   }
@@ -92,16 +100,16 @@ export default class AutocompleteKeys extends React.Component<
           if (typeof option === 'string') {
             return option;
           }
-          return `${option.keycodeInfo!.label}::${option.kinds.join('::')}`;
+          return `${option.keycodeInfo?.label}::${option.kinds.join('::')}`;
         }}
         renderOption={(props, option) => (
           <li {...props}>
             <div className="customkey-auto-select-item">
               <div className="keycode-auto-label-wrapper">
                 <div className="keycode-auto-label">
-                  {option.keycodeInfo!.label}
+                  {option.keycodeInfo?.label}
                 </div>
-                {this.props.showKinds != false && (
+                {this.props.showKinds !== false && (
                   <div className="keycode-auto-category">
                     {kinds2CategoryLabel(option.kinds)}
                   </div>
@@ -137,8 +145,7 @@ export const kinds2CategoryLabel = (kinds: KeymapCategory[]): string => {
     .map((k) => {
       return k
         .split('_')
-        .map((text) => text.charAt(0).toUpperCase() + text.slice(1))
-        .flat()
+        .flatMap((text) => text.charAt(0).toUpperCase() + text.slice(1))
         .join('-');
     })
     .join('/');
